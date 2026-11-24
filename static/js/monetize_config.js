@@ -74,9 +74,9 @@
         tag: '牌局覆盤 / HUD',
         name: 'Hand2Note',
         desc: '高效能牌局紀錄資料庫與進階範圍分析工具，幫你長期統計自己的 VPIP / PFR / 3-Bet 與各位置真實盈虧曲線。',
-        benefit: '支援免費入門版，進階分析可升級訂閱',
-        cta: '了解 Hand2Note →',
-        url: 'https://hand2note.com/',
+        benefit: '支援免費入門版；首購輸入專屬優惠碼 GTOLAB 再享 9 折（10% OFF）',
+        cta: '前往 Hand2Note（優惠碼 GTOLAB）→',
+        url: 'https://hand2note.com?rid=90918',
       },
       {
         id: 'aff_pt4',
