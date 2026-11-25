@@ -34,7 +34,7 @@
         price: 'NT$ 390',
         desc: '把 IG 短影音最受歡迎的 30 支翻後觀念整理成手機高清圖解卡（JJ 高張面、AK 乾燥面 C-bet、Set 快慢打、阻擋張檢核表），上桌前 3 分鐘快速複習。',
         cta: '前往 Portaly 查看詳情 →',
-        url: 'https://portaly.cc/pokergtolab',
+        url: 'https://portaly.cc/pokergtolab/product/WwvCQQgIc04HyWfbuMVu',
       },
       {
         id: 'service_hand_review',
