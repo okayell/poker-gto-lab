@@ -21,6 +21,16 @@
       igUrl: 'https://www.instagram.com/pokergtolab/',
       youtubeUrl: 'https://www.youtube.com/@pokergtolab',
       portalyHomeUrl: 'https://portaly.cc/pokergtolab',
+      // 選填：填入客服信箱後，#/feedback（靜態站外自動寄信）與 #/legal/about 將自動啟用電子郵件聯絡管道
+      contactEmail: 'pokergtolab.tw@gmail.com',
+    },
+
+    // ── 2b. 營運團隊與稅籍揭露設定（單月營收未達起徵點免辦稅籍時，businessName 與 taxId 請留空；切勿填寫未登記之公司名稱以免觸犯公司法第 19 條。未來取得統編後填入即自動於全站頁尾揭露）──
+    business: {
+      operatorLabel: 'GTO 撲克學院（Poker GTO Lab）獨立開發團隊',
+      businessName: '',
+      taxId: '',
+      lastUpdated: '2026-11-25',
     },
 
     // ── 3. Portaly 數位商品與贊助（台灣支援信用卡 / LINE Pay / 超商）──

@@ -97,8 +97,7 @@ GTO.THEORY.push({
     { title: 'PokerNews — Texas Hold’em Rules', url: 'https://www.pokernews.com/poker-rules/texas-holdem.htm' },
     { title: 'Bicycle Cards — How to Play Texas Hold’em Poker', url: 'https://bicyclecards.com/how-to-play/texas-holdem-poker' },
     { title: '維基百科 — 德州撲克', url: 'https://zh.wikipedia.org/zh-tw/%E5%BE%B7%E5%B7%9E%E6%92%B2%E5%85%8B' },
-    { title: 'PokerTraining — The 5 Key Differences Between Cash Game and Tournament Strategy', url: 'https://www.pokertraining.com/poker/blog/the-5-key-differences-between-cash-game-and-tournament-strategy/' },
-    { title: 'Poker Q’z — 德州撲克規則', url: 'https://pokerqz.com/zh-TW/blog/texas-holdem-rules' }
+    { title: 'PokerTraining — The 5 Key Differences Between Cash Game and Tournament Strategy', url: 'https://www.pokertraining.com/poker/blog/the-5-key-differences-between-cash-game-and-tournament-strategy/' }
   ]
 });
 GTO.QUESTIONS.push(
@@ -231,8 +230,7 @@ GTO.THEORY.push({
     { title: 'Wikipedia — Poker probability', url: 'https://en.wikipedia.org/wiki/Poker_probability' },
     { title: 'Wikipedia — List of poker hands', url: 'https://en.wikipedia.org/wiki/List_of_poker_hands' },
     { title: 'Upswing Poker — Poker Hand Rankings', url: 'https://upswingpoker.com/poker-hands-rankings/' },
-    { title: 'PokerNews — Poker Hands Ranking', url: 'https://www.pokernews.com/poker-hands/' },
-    { title: 'GGPoker — 撲克牌型大小', url: 'https://ggpoker.com/zh-tw/poker-basics/poker-hand-rankings/' }
+    { title: 'PokerNews — Poker Hands Ranking', url: 'https://www.pokernews.com/poker-hands/' }
   ]
 });
 GTO.QUESTIONS.push(
@@ -359,7 +357,6 @@ GTO.THEORY.push({
     { title: 'PokerNews — Texas Hold’em Rules', url: 'https://www.pokernews.com/poker-rules/texas-holdem.htm' },
     { title: 'PokerStrategy — Showdown (Glossary)', url: 'https://www.pokerstrategy.com/glossary/Showdown/' },
     { title: 'PokerSkill — Showdown', url: 'https://www.pokerskill.com/poker-glossary/showdown/' },
-    { title: 'Poker Q’z — 德州撲克規則', url: 'https://pokerqz.com/zh-TW/blog/texas-holdem-rules' },
     { title: 'AndyPoker — 德州撲克規則', url: 'https://www.andypoker.com/texas-holdem-rules/' }
   ]
 });
@@ -493,7 +490,6 @@ GTO.THEORY.push({
   sources: [
     { title: 'Poker Stack Exchange — What is the min-raise and min-reraise in Hold’em No Limit?', url: 'https://poker.stackexchange.com/questions/2729/what-is-the-min-raise-and-min-reraise-in-holdem-no-limit' },
     { title: 'PokerSkill — Side Pots Explained', url: 'https://www.pokerskill.com/blog/side-pots-explained/' },
-    { title: 'GGPoker — Beginner’s Guide: No-Limit vs Pot-Limit vs Fixed-Limit', url: 'https://ggpoker.com/blog/the-beginners-guide-series-no-limit-vs-pot-limit-vs-fixed-limit/' },
     { title: 'PokerListings — Texas Hold’em Betting Rules', url: 'https://www.pokerlistings.com/poker-guides/texas-holdem-betting-rules' },
     { title: 'SoMuchPoker — One Chip Rule in Live Poker', url: 'https://somuchpoker.com/poker-term/one-chip-rule-poker-guide-live-game' }
   ]
@@ -956,7 +952,7 @@ GTO.THEORY.push({
   sources: [
     { title: 'Upswing Poker — Quick Poker Tips for Texas Hold’em', url: 'https://upswingpoker.com/quick-poker-tips-texas-holdem/' },
     { title: 'Upswing Poker — Tournament Advice for Beginners', url: 'https://upswingpoker.com/tournament-advice-beginners/' },
-    { title: 'Natural8 — 撲克新手最常犯的 8 個錯誤', url: 'https://www.natural8.com/zh-TW/blog/top-8-mistakes-new-poker-players-make' },
+    { title: 'PokerCoaching — 5 Poker Tips for No-Limit Texas Hold’em Beginners', url: 'https://pokercoaching.com/blog/5-poker-tips-for-no-limit-texas-holdem-beginners/' },
     { title: 'AndyPoker — 德州撲克常見錯誤', url: 'https://www.andypoker.com/common-mistakes/' }
   ]
 });
@@ -1078,7 +1074,6 @@ GTO.THEORY.push({
     { title: 'Hand2Note — Common Preflop Mistakes Made by Beginner Players', url: 'https://hand2note.com/Blog/Features/common-preflop-mistakes-made-by-beginner-players' },
     { title: 'Bluffing Monkeys — 10 Common Poker Mistakes', url: 'https://bluffingmonkeys.com/10-common-poker-mistakes/' },
     { title: 'PokerStrategy — 10 Typical Rookie Mistakes', url: 'https://www.pokerstrategy.com/strategy/fixed-limit/10-typical-rookie-mistakes/' },
-    { title: 'Natural8 — 撲克新手最常犯的 8 個錯誤', url: 'https://www.natural8.com/zh-TW/blog/top-8-mistakes-new-poker-players-make' },
     { title: 'AndyPoker — 德州撲克常見錯誤', url: 'https://www.andypoker.com/common-mistakes/' }
   ]
 });
@@ -1211,7 +1206,7 @@ GTO.THEORY.push({
   sources: [
     { title: 'PokerSkill — Poker Etiquette', url: 'https://www.pokerskill.com/blog/poker-etiquette/' },
     { title: 'The Poker Bank — Live Poker Etiquette', url: 'https://www.thepokerbank.com/articles/etiquette/live/' },
-    { title: 'Natural8 — 什麼是撲克中的 Slow Roll', url: 'https://www.natural8.com/zh-TW/blog/slow-roll-in-poker' },
+    { title: 'PokerNews — Slow Roll in Poker Explained', url: 'https://www.pokernews.com/pokerterms/slow-roll.htm' },
     { title: 'PokerCoaching — Real-Time Assistance in Poker', url: 'https://pokercoaching.com/blog/real-time-assistance-in-poker-is-it-an-imminent-threat/' },
     { title: 'Wikipedia — Glossary of poker terms', url: 'https://en.wikipedia.org/wiki/Glossary_of_poker_terms' }
   ]

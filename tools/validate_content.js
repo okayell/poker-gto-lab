@@ -112,7 +112,8 @@ function checkRoute(where, href) {
   const sub = segs[1] || '';
   const ok = (() => {
     switch (page) {
-      case 'home': case 'tools': case 'stats': case 'feedback': case 'play': case 'replay': return true;
+      case 'home': case 'tools': case 'stats': case 'feedback': case 'play': case 'replay': case 'resources': return true;
+      case 'legal': return ['', 'terms', 'privacy', 'refund', 'about'].includes(sub);
       case 'learn': case 'theory': return !sub || lessonIds.has(sub);
       case 'ranges': return !sub || !!scenarios[sub];
       case 'quiz':
@@ -408,6 +409,62 @@ if (G.LESSON_META) {
   });
   lessons.filter((l) => l.stage === undefined).forEach((l) => { if (!G.LESSON_META[l.id]) warn('既有課程 ' + l.id + ' 尚無 LESSON_META'); });
 }
+
+// ---------------------------------------------------------------------------
+// 7. 合規與外部競品／真實博弈平台掃描
+// ---------------------------------------------------------------------------
+const FORBIDDEN_COMPETITOR_RE = new RegExp(
+  ['poker\\s*q[\'’]?z', 'poker' + 'qz', 'clo' + 'viz'].join('|'),
+  'i'
+);
+const FORBIDDEN_ROOM_RE = new RegExp(
+  ['gg' + 'poker\\.', 'natural' + '8\\.', 'poker' + 'stars\\.', '888' + 'poker\\.'].join('|'),
+  'i'
+);
+function checkComplianceText(where, val) {
+  if (typeof val === 'string' && FORBIDDEN_COMPETITOR_RE.test(val)) {
+    err(where + ' 含有禁止之競品名稱或連結');
+  }
+}
+function checkComplianceUrl(where, url) {
+  if (typeof url === 'string' && (FORBIDDEN_COMPETITOR_RE.test(url) || FORBIDDEN_ROOM_RE.test(url))) {
+    err(where + ' 含有禁止之外連網址：' + url);
+  }
+}
+lessons.forEach((l) => {
+  const w = '合規檢查[課程:' + l.id + ']';
+  checkComplianceText(w + '.title', l.title);
+  checkComplianceText(w + '.html', l.html);
+  (l.sources || []).forEach((s, i) => {
+    checkComplianceText(w + '.sources[' + i + '].title', s && s.title);
+    checkComplianceUrl(w + '.sources[' + i + '].url', s && s.url);
+  });
+});
+if (G.LESSON_META) {
+  Object.entries(G.LESSON_META).forEach(([id, m]) => {
+    (m.sources || []).forEach((s, i) => {
+      checkComplianceText('合規檢查[LESSON_META:' + id + '].sources[' + i + '].title', s && s.title);
+      checkComplianceUrl('合規檢查[LESSON_META:' + id + '].sources[' + i + '].url', s && s.url);
+    });
+  });
+}
+(G.RESOURCES || []).forEach((r) => {
+  const w = '合規檢查[資源:' + (r && r.id) + ']';
+  checkComplianceText(w + '.title', r && r.title);
+  checkComplianceText(w + '.author', r && r.author);
+  checkComplianceText(w + '.desc', r && r.desc);
+  checkComplianceUrl(w + '.url', r && r.url);
+});
+(G.TIPS || []).forEach((t) => {
+  const w = '合規檢查[技巧:' + (t && t.id) + ']';
+  checkComplianceText(w + '.title', t && t.title);
+  checkComplianceText(w + '.text', t && t.text);
+});
+(G.FAQ || []).forEach((f) => {
+  const w = '合規檢查[FAQ:' + (f && f.id) + ']';
+  checkComplianceText(w + '.q', f && f.q);
+  checkComplianceText(w + '.a', f && f.a);
+});
 
 // ---------------------------------------------------------------------------
 // 輸出

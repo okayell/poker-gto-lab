@@ -798,8 +798,7 @@ GTO.THEORY.push({
     { title: 'GTO Wizard — Principles of River Play', url: 'https://blog.gtowizard.com/principles-of-river-play/' },
     { title: 'GTO Wizard — Blockers & Unblockers: Picking Great Bluffs', url: 'https://blog.gtowizard.com/blockers-unblockers-the-secret-to-picking-great-bluffs/' },
     { title: 'GTO Wizard — We\'re at the River, Our Hand Can\'t Win, Now What?', url: 'https://blog.gtowizard.com/were-at-the-river-our-hand-cant-win-now-what/' },
-    { title: 'Upswing Poker — River Check-Raise Strategy', url: 'https://upswingpoker.com/check-raise-river-strategy/' },
-    { title: 'PokerStars Learn — How to Spot Underbluffing', url: 'https://www.pokerstars.com/poker/learn/strategies/how-to-spot-underbluffing/' }
+    { title: 'Upswing Poker — River Check-Raise Strategy', url: 'https://upswingpoker.com/check-raise-river-strategy/' }
   ]
 });
 GTO.QUESTIONS.push(

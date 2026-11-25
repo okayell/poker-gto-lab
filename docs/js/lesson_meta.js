@@ -139,8 +139,8 @@ Object.assign(GTO.LESSON_META, {
     plain: '讀牌面就像看天氣：A 高、彩虹、不連接的牌面是「晴天」，局勢穩定，翻前加注者可以小注頻繁出擊；中低張、雙色又連接的牌面是「暴風雨」，隨時有人中順子或同花，下注要更謹慎，或用更大的注保護。先判斷天氣，再決定要不要出門、帶多大的傘。',
     sources: [
       { title: 'Upswing Poker — Board Texture Tips', url: 'https://upswingpoker.com/board-texture-tips/' },
-      { title: 'PokerStars Learn — The Game Theory of Board Texture (Part 4: High Monotone Flops)', url: 'https://www.pokerstars.com/poker/learn/strategies/the-game-theory-of-board-texture-part-4-high-monotone-flops/' },
-      { title: '888poker Magazine — Poker Board Textures', url: 'https://www.888poker.com/magazine/poker-board-textures' },
+      { title: 'GTO Wizard — How to Analyze Flop Textures', url: 'https://blog.gtowizard.com/how-to-analyze-flop-textures/' },
+      { title: 'PokerNews — Board Texture in Poker', url: 'https://www.pokernews.com/strategy/board-texture-in-poker-32177.htm' },
     ],
   },
   cbet: {
@@ -170,7 +170,7 @@ Object.assign(GTO.LESSON_META, {
     sources: [
       { title: 'PokerNews — Stack-to-Pot Ratio (SPR)', url: 'https://www.pokernews.com/pokerterms/stack-to-pot-ratio.htm' },
       { title: 'Red Chip Poker — SPR (Stack-to-Pot Ratio) Podcast', url: 'https://redchippoker.com/spr-stack-to-pot-ratio-podcast/' },
-      { title: 'Natural8 — Stack-to-Pot Ratio', url: 'https://www.natural8.com/en/blog/stack-to-pot-ratio' },
+      { title: 'Upswing Poker — Stack to Pot Ratio (SPR) Strategy', url: 'https://upswingpoker.com/stack-to-pot-ratio-spr-poker-strategy/' },
     ],
   },
   'defense-postflop': {

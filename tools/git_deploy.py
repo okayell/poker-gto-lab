@@ -101,6 +101,7 @@ def run_checks_and_build(skip_check: bool) -> None:
         _run(["node", "tools/validate_content.js"])
         _run(["node", "--check", "static/js/monetize_config.js"])
         _run(["node", "--check", "static/js/monetize_ui.js"])
+        _run(["node", "--check", "static/js/legal.js"])
     else:
         print("1/4 已略過內容檢查 (--skip-check)")
 

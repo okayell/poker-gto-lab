@@ -188,9 +188,7 @@
         '</div>' +
       '</section>' +
 
-      (GTO.Monetize ? GTO.Monetize.bannerHtml('home') : '') +
-
-      '<footer class="home-foot">內容整理自公開德州撲克賽局理論與 Solver 簡化近似資料，僅供競技策略學習。請遵守當地法律、理性娛樂。</footer>';
+      (GTO.Monetize ? GTO.Monetize.bannerHtml('home') : '');
     GTO.hydrateCards(root);
   }
 
@@ -903,6 +901,7 @@
       else if (page === 'tools') renderToolsPage(main);
       else if (page === 'stats') renderStatsPage(main);
       else if (page === 'resources') { if (GTO.Monetize) GTO.Monetize.renderResourcesPage(main); }
+      else if (page === 'legal') { if (GTO.Legal) GTO.Legal.renderLegalPage(main, sub); }
       else if (page === 'feedback') GTO.renderFeedbackPage(main);
       else renderHomePage(main);
       if (GTO.hydrateWidgets) GTO.hydrateWidgets(main);
@@ -911,6 +910,7 @@
       console.error(e);
       main.innerHTML = '<div class="empty">頁面載入失敗：' + esc(e.message) + '　<a href="#/home">回首頁</a></div>';
     }
+    if (GTO.Legal) GTO.Legal.renderFooter(page);
     const keepRangeScroll = prevPage === 'ranges' && page === 'ranges';
     prevPage = page;
     const skipScrollTop = keepRangeScroll || (page === 'learn' && query && query.sec);

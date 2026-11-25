@@ -312,7 +312,7 @@ GTO.TIPS.push(
   { id: 'tip-118', cat: 'online', level: 1, title: '從單桌開始加桌', lesson: 'game-selection',
     text: `先單桌打到決策穩定，再一次加一桌；如果勝率明顯下滑或開始常常超時，就退回上一個桌數。` },
   { id: 'tip-119', cat: 'online', level: 2, title: 'HUD 只放關鍵數據', lesson: 'player-types',
-    text: `平台允許 HUD 時，只放 4–6 個數據（VPIP、PFR、3-Bet、Fold to 3-Bet、C-Bet、手數），並用顏色標記玩家類型。注意：部分平台（例如 GGPoker）禁止第三方 HUD，只能用內建工具。` },
+    text: `平台允許 HUD 時，只放 4–6 個數據（VPIP、PFR、3-Bet、Fold to 3-Bet、C-Bet、手數），並用顏色標記玩家類型。注意：部分平台禁止第三方 HUD，只能用內建數據工具，使用前務必先確認規則。` },
   { id: 'tip-120', cat: 'online', level: 2, title: '快速棄牌桌整體偏緊', lesson: 'game-formats',
     text: `Zoom、Rush &amp; Cash 這類快速棄牌桌每手都換對手，玩家普遍偏緊：前位開池要更尊重、翻前照範圍表打，翻牌對常客的小注 C-Bet 效果通常不錯。` },
   { id: 'tip-121', cat: 'online', level: 1, title: '時間銀行留給大底池', lesson: 'game-selection',
@@ -648,9 +648,9 @@ GTO.RESOURCES.push(
   { id: 'res-17', cat: 'blog', title: 'BlackRain79：Zoom 快速棄牌策略指南', author: 'Nathan Williams',
     url: 'https://www.blackrain79.com/2015/07/zoom-poker-strategy-essential-guide.html', lang: 'en', level: 2, free: true,
     desc: `專攻線上微級別（Micro stakes）的教練部落格，這篇講快速棄牌桌的對手傾向與調整。適合線上低級別、想穩定贏錢的玩家。` },
-  { id: 'res-18', cat: 'blog', title: 'PokerStars Learn：Jared Tendler 的 Tilt 控制技巧', author: 'PokerStars Learn',
-    url: 'https://www.pokerstars.com/poker/learn/news/jared-tendlers-tips-for-taming-tilt-from-the-mental-game-of-poker/', lang: 'en', level: 1, free: true,
-    desc: `PokerStars 免費學習專區的文章，摘要 The Mental Game of Poker 的 Tilt 控制方法。適合還沒買書、想先試讀心態管理重點的玩家。` },
+  { id: 'res-18', cat: 'blog', title: 'PokerCoaching：如何克服撲克情緒失控（Tilt）', author: 'Jonathan Little（PokerCoaching）',
+    url: 'https://pokercoaching.com/blog/poker-tilt/', lang: 'en', level: 1, free: true,
+    desc: `系統拆解常見的撲克情緒失控（Tilt）誘因與桌邊即時冷靜流程，搭配停損線與賽前檢核表。適合還沒讀完心態專書、想先建立情緒防護網的玩家。` },
   { id: 'res-19', cat: 'blog', title: 'Tommy Angelo：救了我上千個買入的撲克口訣', author: 'Tommy Angelo（poker.org）',
     url: 'https://www.poker.org/poker-strategy/tommy-angelo-the-poker-mantra-that-has-saved-me-a-thousand-buy-ins-ahqRY3H3dgKQ/', lang: 'en', level: 2, free: true,
     desc: `《Elements of Poker》作者談如何辨識自己進入 C-game：最可靠的徵兆是入池率（VPIP）突然上升、開始看更多翻牌。適合容易 Tilt、想搭配 Tendler 的書一起練習情緒控制的玩家。` }
@@ -771,9 +771,9 @@ GTO.RESOURCES.push(
 
 // 🇹🇼 中文資源
 GTO.RESOURCES.push(
-  { id: 'res-51', cat: 'zh', title: `POKER Q'z：德州撲克 GTO 訓練`, author: 'CLOViZ, Inc.',
-    url: 'https://apps.apple.com/tw/app/poker-qz-%E5%BE%B7%E5%B7%9E%E6%92%B2%E5%85%8B-gto-%E8%A8%93%E7%B7%B4/id6737678499', lang: 'zh', level: 1, free: true,
-    desc: `中文介面的 GTO 訓練 App（iOS、Android、Windows 皆有），用大量 6 人桌現金桌與錦標賽情境題練習決策，附 AI 解析與漏洞分析。免費下載、進階功能為 App 內購買，適合每天花 5–10 分鐘練習的新手。` },
+  { id: 'res-51', cat: 'zh', title: 'GTO Wizard 繁體中文策略專欄', author: 'GTO Wizard',
+    url: 'https://blog.gtowizard.com/zh-hant/', lang: 'zh', level: 1, free: true,
+    desc: `GTO Wizard 官方繁體中文教學專欄，免費整理多篇賽局理論核心觀念、翻前範圍建構、MDF 防守頻率與剝削調整文章。適合習慣中文閱讀、想紮實建立 GTO 邏輯的新手與中階玩家。` },
   { id: 'res-52', cat: 'zh', title: 'OVERBANKROLL', author: 'OVERBANKROLL',
     url: 'https://www.overbankroll.com/', lang: 'zh', level: 2, free: false,
     desc: `華語撲克教育平台，整合核心課程、練習與社群交流，強調把 GTO 基礎和實戰剝削結合成可執行的邏輯。適合想有系統長期進步的中階玩家。` },

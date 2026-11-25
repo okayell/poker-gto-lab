@@ -156,6 +156,9 @@
               '</article>'
             ).join('') +
           '</div>' +
+          '<div class="mon-prepurchase-note">' +
+            '📌 <strong>購買前須知：</strong>數位電子書（PDF）屬「非以有形媒介提供之數位內容」，一經付款提供下載連結即完成交付；依台灣《消費者保護法》第 19 條合理例外情事規定，經結帳確認同意後不適用 7 日無條件退費（檔案異常可免費補發）。詳見 <a href="#/legal/refund">數位教材與退款說明</a>。' +
+          '</div>' +
         '</section>' +
 
         '<section class="mon-section">' +
@@ -182,6 +185,12 @@
 
         '<footer class="mon-disclaimer">' +
           '<strong>合規與透明聲明：</strong>本站為純競技德州撲克數學機率、博弈論（GTO）與策略教學工具，不提供任何真錢賭博或線上私局服務。部分外部學習軟體連結為聯盟推薦連結，點擊不會增加你的任何費用。' +
+          '<div class="mon-legal-links">' +
+            '<a href="#/legal/terms">使用條款與非博弈聲明</a> · ' +
+            '<a href="#/legal/privacy">隱私權政策</a> · ' +
+            '<a href="#/legal/refund">退款說明</a> · ' +
+            '<a href="#/legal/about">關於與聯絡我們</a>' +
+          '</div>' +
           (gaActive ? '' : ' <span class="mon-ga-hint">（GA4 追蹤碼待設定：編輯 static/js/monetize_config.js 即可啟用）</span>') +
         '</footer>' +
       '</div>';
