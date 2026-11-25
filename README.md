@@ -13,7 +13,21 @@
 2. 填入你的 Portaly 商品／贊助網址。
 3. 填入你申請到的 GTO Wizard / Hand2Note / PokerTracker 4 聯盟連結。
 
-## 打包與推到獨立 GitHub Pages（免費架站）
+## 一鍵自動驗證、打包並部署（免重複輸密碼）
+
+已比照《開心學園》內建 [`tools/git_deploy.py`](tools/git_deploy.py)：
+
+1. 首次使用先設定一次專屬 GitHub PAT（僅需勾選 `okayell/poker-gto-lab` 的 `Contents: Read and write`）：
+   ```bash
+   python3 tools/git_deploy.py --setup-token
+   ```
+2. 之後每次修改完只要跑一行，就會自動檢查語法、重建 `docs/`、自動 commit 並 push 上線：
+   ```bash
+   python3 tools/git_deploy.py
+   ```
+   （先預覽不推送可加 `--dry-run`）
+
+## 打包與推到獨立 GitHub Pages（手動流程）
 
 1. 重建靜態發布資料夾 `docs/`：
    ```bash
