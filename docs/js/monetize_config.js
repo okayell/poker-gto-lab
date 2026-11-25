@@ -36,16 +36,17 @@
         cta: '前往 Portaly 查看詳情 →',
         url: 'https://portaly.cc/pokergtolab/product/WwvCQQgIc04HyWfbuMVu',
       },
-      {
-        id: 'service_hand_review',
-        badge: '深度覆盤',
-        tone: 'coral',
-        title: '實戰關鍵手牌 1 對 1 GTO 健檢報告',
-        price: 'NT$ 690',
-        desc: '投稿你最糾結的 3 手實戰牌局，搭配 GTO Solver 與低級別剝削視角產出專屬文字＋圖解覆盤報告，幫你直接抓出最燒錢的 EV 漏洞。',
-        cta: '預約手牌健檢（Portaly）→',
-        url: 'https://portaly.cc/pokergtolab',
-      },
+      // 暫緩開放：等頻道流量穩定後再上架 Portaly 並取消註解
+      // {
+      //   id: 'service_hand_review',
+      //   badge: '深度覆盤',
+      //   tone: 'coral',
+      //   title: '實戰關鍵手牌 1 對 1 GTO 健檢報告',
+      //   price: 'NT$ 690',
+      //   desc: '投稿你最糾結的 3 手實戰牌局，搭配 GTO Solver 與低級別剝削視角產出專屬文字＋圖解覆盤報告，幫你直接抓出最燒錢的 EV 漏洞。',
+      //   cta: '預約手牌健檢（Portaly）→',
+      //   url: 'https://portaly.cc/pokergtolab',
+      // },
       {
         id: 'tip_coffee',
         badge: '免費工具贊助',
