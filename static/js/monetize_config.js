@@ -17,9 +17,9 @@
 
     // ── 2. 你的 IG / YouTube 頻道連結 ──
     social: {
-      igHandle: '@your_poker_lab',
-      igUrl: 'https://www.instagram.com/',
-      youtubeUrl: 'https://www.youtube.com/',
+      igHandle: '@pokergtolab',
+      igUrl: 'https://www.instagram.com/pokergtolab/',
+      youtubeUrl: 'https://www.youtube.com/@pokergtolab',
       portalyHomeUrl: 'https://portaly.cc/pokergtolab',
     },
 
