@@ -500,9 +500,15 @@
       });
     }
 
+    let scrubberRaf = 0;
     if (rcSlider) {
       rcSlider.addEventListener('input', () => {
-        jumpToStep(parseInt(rcSlider.value, 10));
+        const target = parseInt(rcSlider.value, 10);
+        if (scrubberRaf) cancelAnimationFrame(scrubberRaf);
+        scrubberRaf = requestAnimationFrame(() => {
+          scrubberRaf = 0;
+          jumpToStep(target);
+        });
       });
     }
 
@@ -514,7 +520,7 @@
       });
     });
 
-    refreshReplayDisplay();
+    refreshReplayDisplay(true);
   }
 
   function handleReplayKeydown(e) {
@@ -532,7 +538,7 @@
   function jumpToStep(idx) {
     if (!activeHand || !activeHand.actions) return;
     currentStepIdx = Math.max(0, Math.min(activeHand.actions.length, idx));
-    refreshReplayDisplay();
+    refreshReplayDisplay(false);
   }
 
   function jumpToStreet(streetKey) {
@@ -548,7 +554,8 @@
     }
   }
 
-  function refreshReplayDisplay() {
+  let lastRenderedCoachHandId = '';
+  function refreshReplayDisplay(forceCoach) {
     if (!activeHand) return;
     const rcSlider = document.getElementById('rcSlider');
     const rcStepLbl = document.getElementById('rcStepLbl');
@@ -556,7 +563,10 @@
     if (rcStepLbl) rcStepLbl.textContent = currentStepIdx + ' / ' + activeHand.actions.length + ' 步';
 
     renderReplayTable();
-    renderCoachAnalysisBox();
+    if (forceCoach || lastRenderedCoachHandId !== activeHand.handId) {
+      lastRenderedCoachHandId = activeHand.handId;
+      renderCoachAnalysisBox();
+    }
   }
 
   function computeReplayStepState(h, step) {
@@ -673,7 +683,7 @@
     const streetMap = { preflop: 'PREFLOP · 翻牌前', flop: 'FLOP · 翻牌圈', turn: 'TURN · 轉牌圈', river: 'RIVER · 河牌圈', showdown: 'SHOWDOWN · 攤牌' };
 
     wrap.innerHTML =
-      '<div class="arena-table-container replay-table-stage">' +
+      '<div class="arena-table-container replay-table-stage no-terms no-en">' +
         '<div class="arena-table replay-mini-table">' +
           '<div class="arena-rail">' +
             '<div class="arena-felt">' +
@@ -726,14 +736,14 @@
 
               const actTone = replayActionTone(lastAct);
 
-              return '<div class="' + cls + '">' +
+              return '<div class="' + cls + '" data-seat="' + idx + '">' +
                 (cardsHtml ? '<div class="arena-seat-cards">' + cardsHtml + '</div>' : '') +
                 '<div class="arena-seat-badge">' +
                   '<div class="asb-top">' +
                     (pos ? '<span class="asb-pos' + (isHero ? ' hero-pos' : '') + '">' + pos + '</span>' : '') +
                     '<span class="asb-name">' + GTO.esc(name) + '</span>' +
                   '</div>' +
-                  (godMode && persona.name ? '<div class="asb-persona-badge" title="真實性格：' + GTO.esc(persona.name) + '">' + persona.tagIcon + ' ' + GTO.esc(persona.name) + matchHtml + '</div>' : '') +
+                  (godMode && persona.name ? '<div class="asb-persona-badge" title="真實性格：' + GTO.esc(persona.name) + '"><span class="apb-ic">' + persona.tagIcon + '</span><span class="apb-name">' + GTO.esc(persona.name) + '</span>' + matchHtml + '</div>' : '') +
                   '<div class="asb-stack"><strong>' + stack + '</strong> BB</div>' +
                 '</div>' +
                 (lastAct ? '<div class="arena-action-bubble ' + actTone + '">' + (tell ? '<span class="tell">' + tell + '</span> ' : '') + GTO.esc(lastAct) + '</div>' : '') +
@@ -859,8 +869,8 @@
       '<div class="decision-detail card">' +
         // 評級抬頭
         '<div class="dd-head">' +
-          '<div class="dd-grade-pill ' + (an.grade === 'best' || an.grade === 'good' ? 'good' : 'bad') + '">' +
-            an.gradeLabel + (an.evLossBb > 0 ? ' (損失約 -' + an.evLossBb + 'bb EV)' : '') +
+          '<div class="dd-grade-pill grade-' + GTO.esc(an.grade || 'good') + '">' +
+            GTO.esc(an.gradeLabel) + (an.evLossBb > 0 ? ' (損失約 -' + an.evLossBb + 'bb EV)' : '') +
           '</div>' +
           '<div class="dd-actions">' +
             '<a href="#/play?retry=' + activeHand.handId + ':' + decIdx + '" class="btn-xs primary">🔄 從此點重打一次 (Retry Spot)</a>' +

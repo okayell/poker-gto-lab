@@ -20,17 +20,64 @@
   const NAV_ITEMS = [
     { id: 'home', href: '#/home', icon: '🏠', label: '首頁', mobile: true },
     { id: 'play', href: '#/play', icon: '♠️', label: '實戰桌', mLabel: '實戰', mobile: true },
-    { id: 'replay', href: '#/replay', icon: '📜', label: '覆盤', mobile: true },
+    { id: 'replay', href: '#/replay', icon: '📜', label: '覆盤', drawer: true, desc: '雙軌教練覆盤與漏洞雷達' },
     { id: 'learn', href: '#/learn', icon: '🎓', label: '學習', mobile: true },
     { id: 'ranges', href: '#/ranges', icon: '📊', label: '範圍表', mobile: true },
     { id: 'quiz', href: '#/quiz', icon: '🎯', label: '練習', mobile: true },
-    { id: 'tools', href: '#/tools', icon: '🧮', label: '工具' },
-    { id: 'wiki', href: '#/wiki', icon: '📖', label: '百科' },
-    { id: 'stats', href: '#/stats', icon: '📈', label: '進度', mobile: true },
-    { id: 'resources', href: '#/resources', icon: '⚡', label: '進階資源', mLabel: '資源', mobile: true },
-    { id: 'feedback', href: '#/feedback', icon: '💬', label: '意見回饋', mLabel: '回饋' },
+    { id: 'tools', href: '#/tools', icon: '🧮', label: '工具', drawer: true, desc: '勝率、MDF、EV 與 SPR 計算機' },
+    { id: 'wiki', href: '#/wiki', icon: '📖', label: '百科', drawer: true, desc: '260+ 術語、FAQ、技巧與速查表' },
+    { id: 'stats', href: '#/stats', icon: '📈', label: '進度', drawer: true, desc: '課程完成度、成就徽章與錯題本' },
+    { id: 'resources', href: '#/resources', icon: '⚡', label: '進階資源', mLabel: '資源', drawer: true, desc: '翻後 30 招隨身卡與進階訓練工具' },
+    { id: 'feedback', href: '#/feedback', icon: '💬', label: '意見回饋', mLabel: '回饋', drawer: true, desc: '問題回報、勘誤與功能許願' },
   ];
   const NAV_ALIAS = { theory: 'learn', glossary: 'wiki' };
+  const DRAWER_IDS = new Set(['replay', 'tools', 'wiki', 'stats', 'resources', 'feedback', 'legal']);
+
+  function closeMobileDrawer() {
+    const dr = document.getElementById('mobileMoreDrawer');
+    if (dr) dr.classList.remove('open');
+    const btn = document.getElementById('mnavMoreBtn');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+  }
+
+  function toggleMobileDrawer(act) {
+    let dr = document.getElementById('mobileMoreDrawer');
+    if (!dr) {
+      dr = document.createElement('div');
+      dr.id = 'mobileMoreDrawer';
+      dr.className = 'mnav-drawer';
+      dr.innerHTML =
+        '<div class="mnav-drawer-sheet" role="dialog" aria-label="更多功能導覽">' +
+          '<div class="mnav-drawer-head"><b>更多功能</b><button type="button" class="mnav-drawer-close" aria-label="關閉">✕</button></div>' +
+          '<div class="mnav-drawer-grid">' +
+            NAV_ITEMS.filter((it) => it.drawer).map((it) =>
+              '<a class="mnav-drawer-item" data-nav="' + it.id + '" href="' + it.href + '">' +
+                '<span class="mdi-ic">' + it.icon + '</span>' +
+                '<span class="mdi-txt"><b>' + it.label + '</b><small>' + (it.desc || '') + '</small></span>' +
+              '</a>'
+            ).join('') +
+            '<a class="mnav-drawer-item" data-nav="legal" href="#/legal/terms">' +
+              '<span class="mdi-ic">⚖️</span>' +
+              '<span class="mdi-txt"><b>法務與聯絡</b><small>非博弈聲明、隱私權與客服</small></span>' +
+            '</a>' +
+          '</div>' +
+        '</div>';
+      document.body.appendChild(dr);
+      dr.addEventListener('click', (e) => {
+        if (e.target === dr || e.target.closest('.mnav-drawer-close') || e.target.closest('.mnav-drawer-item')) {
+          closeMobileDrawer();
+        }
+      });
+    }
+    const curAct = act || NAV_ALIAS[parseHash().page] || parseHash().page;
+    dr.querySelectorAll('.mnav-drawer-item').forEach((a) => {
+      a.classList.toggle('active', a.getAttribute('data-nav') === curAct);
+    });
+    const willOpen = !dr.classList.contains('open');
+    dr.classList.toggle('open', willOpen);
+    const btn = document.getElementById('mnavMoreBtn');
+    if (btn) btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+  }
 
   function parseHash() {
     const raw = (location.hash || '#/home').replace(/^#\/?/, '');
@@ -61,12 +108,16 @@
       if (!mob.__built) {
         mob.innerHTML = NAV_ITEMS.filter((it) => it.mobile).map((it) =>
           '<a class="mnav-link" data-nav="' + it.id + '" href="' + it.href + '"><span>' + it.icon + '</span><small>' + (it.mLabel || it.label) + '</small></a>'
-        ).join('');
+        ).join('') +
+        '<button type="button" class="mnav-link mnav-more-btn" id="mnavMoreBtn" data-nav="more" aria-expanded="false"><span>☰</span><small>更多</small></button>';
+        const moreBtn = mob.querySelector('#mnavMoreBtn');
+        if (moreBtn) moreBtn.addEventListener('click', () => toggleMobileDrawer());
         mob.__built = true;
       }
       const mLinks = mob.children;
       for (let i = 0; i < mLinks.length; i++) {
-        mLinks[i].classList.toggle('active', mLinks[i].getAttribute('data-nav') === act);
+        const key = mLinks[i].getAttribute('data-nav');
+        mLinks[i].classList.toggle('active', key === 'more' ? DRAWER_IDS.has(act) : key === act);
       }
     }
     updateHeaderStats();
@@ -494,8 +545,9 @@
     const sprStackInp = root.querySelector('#sprStackInp');
     const sprResultBox = root.querySelector('#sprResultBox');
 
-    // 1. 勝率模擬邏輯
+    // 1. 勝率模擬邏輯（非同步執行首輪，避免切換到工具頁時阻塞渲染）
     const runEq = () => {
+      if (!eqResultBox.isConnected) return;
       try {
         const s1 = eqP1Inp.value.trim();
         const s2 = eqP2Inp.value.trim();
@@ -526,7 +578,8 @@
         eqResultBox.innerHTML = '<div class="callout warn">' + GTO.esc(err.message || String(err)) + '</div>';
       }
     };
-    runEq();
+    eqResultBox.innerHTML = '<div class="muted small" style="padding:10px 0">⏳ 正在計算 20,000 次模擬勝率…</div>';
+    requestAnimationFrame(() => setTimeout(runEq, 16));
 
     // 2 & 3. MDF + EV 同步計算
     let mdfRaf = 0;
@@ -747,11 +800,13 @@
           '<div class="card skpi"><span>決策標準率</span><strong>' + (arenaStats.totalDecisions ? Math.round((arenaStats.goodDecisions / arenaStats.totalDecisions) * 100) : 0) + '%</strong></div>' +
           '<div class="card skpi"><span>待改善漏洞</span><strong>' + leakList.length + ' 項</strong></div>' +
         '</div>' +
-        '<table class="tbl"><thead><tr><th>常犯漏洞觀念</th><th>發生次數</th><th>累計損耗 EV</th><th>推薦補課指引</th></tr></thead><tbody>' + leakRows + '</tbody></table>' +
+        '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>常犯漏洞觀念</th><th>發生次數</th><th>累計損耗 EV</th><th>推薦補課指引</th></tr></thead><tbody>' + leakRows + '</tbody></table></div>' +
       '</div>';
 
     root.innerHTML =
-      ui.pageHead({ icon: '📈', title: '我的進度', sub: '課程完成度、練習正確率、翻前弱點熱力圖與錯題本——紀錄自動儲存在瀏覽器與本機伺服器。',
+      ui.pageHead({ icon: '📈', title: '我的進度', sub: canDownloadDist
+        ? '課程完成度、練習正確率、翻前弱點熱力圖與錯題本——紀錄自動儲存在瀏覽器與本機伺服器。'
+        : '課程完成度、練習正確率、翻前弱點熱力圖與錯題本——紀錄自動儲存在你的瀏覽器本機，可隨時匯出 JSON 備份。',
         actions: '<button type="button" class="btn" id="exportProgressBtn">📥 匯出進度</button>' +
           '<label class="btn" style="cursor:pointer;margin:0">📤 匯入進度<input type="file" id="importProgressInp" accept=".json,application/json" style="display:none"></label>' +
           '<button type="button" class="btn" id="resetProgressBtn">🗑️ 重置紀錄</button>' }) +
@@ -775,9 +830,9 @@
       '<div class="stats-grid">' +
         '<div class="card">' +
           '<h3>🎯 各練習模式成績統計</h3>' +
-          '<table class="tbl"><thead><tr><th>測驗模式</th><th>作答題數</th><th>答對題數</th><th>正確率</th><th>操作</th></tr></thead><tbody>' + modeRows + '</tbody></table>' +
+          '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>測驗模式</th><th>作答題數</th><th>答對題數</th><th>正確率</th><th>操作</th></tr></thead><tbody>' + modeRows + '</tbody></table></div>' +
           '<h3 style="margin-top:20px">🧭 6 人桌各位置翻前決策準確率</h3>' +
-          '<table class="tbl"><thead><tr><th>位置</th><th>作答題數</th><th>正確率</th></tr></thead><tbody>' + posRows + '</tbody></table>' +
+          '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>位置</th><th>作答題數</th><th>正確率</th></tr></thead><tbody>' + posRows + '</tbody></table></div>' +
         '</div>' +
 
         '<div class="card">' +
@@ -870,7 +925,9 @@
   // 路由器啟動
   // ===========================================================================
   let prevPage = '';
+  let enterRaf = 0;
   function route() {
+    closeMobileDrawer();
     const { page, sub, extra, query } = parseHash();
     const main = document.getElementById('appMain');
     if (!main) return;
@@ -881,6 +938,7 @@
     if (GTO.teardownQuiz) GTO.teardownQuiz();
     if (GTO.ArenaUI && GTO.ArenaUI.teardownPlay) GTO.ArenaUI.teardownPlay();
     if (GTO.ReplayUI && GTO.ReplayUI.teardownReplay) GTO.ReplayUI.teardownReplay();
+    const isPageSwitch = prevPage && prevPage !== page;
     renderHeader(page);
     main.className = 'app-main page-' + page;
     try {
@@ -914,10 +972,21 @@
     const keepRangeScroll = prevPage === 'ranges' && page === 'ranges';
     prevPage = page;
     const skipScrollTop = keepRangeScroll || (page === 'learn' && query && query.sec);
-    if (!skipScrollTop) window.scrollTo({ top: 0, behavior: 'instant' });
+    if (!skipScrollTop) window.scrollTo(0, 0);
+    if (isPageSwitch) {
+      if (enterRaf) cancelAnimationFrame(enterRaf);
+      main.classList.add('page-enter');
+      enterRaf = requestAnimationFrame(() => {
+        enterRaf = requestAnimationFrame(() => {
+          main.classList.remove('page-enter');
+          enterRaf = 0;
+        });
+      });
+    }
   }
 
   window.addEventListener('hashchange', route);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMobileDrawer(); });
   GTO.on('progress', updateHeaderStats);
   GTO.on('progress-replaced', () => {
     updateHeaderStats();

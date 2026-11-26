@@ -361,8 +361,8 @@
     '.g-rel', '.fc-front', '.lq-q', '.mcq-q', '.maxim', '.home-hero', '.home-foot', '.stage-head', '.stage-stepper',
     '.badge-grid', '.eq-bar-wrap', '.drill-head', '.filter-bar', '.session-scoreboard', '.kbd-hint', '.hub-top',
     '.hub-sec-head', '.qp-meta', '.pd-head', '.pw-head',
-    '.arena-table', '.arena-topbar', '.arena-action-bar', '.replay-topbar', '.replay-sidebar', '.rv-head', '.dd-math-tiles', '.dd-compare-row',
-    '.clc-tier-badge', '.clc-badge-pill', '.concept-badge', '.hco-head',
+    '.arena-table', '.arena-topbar', '.arena-action-bar', '.arena-wrap', '.replay-topbar', '.replay-sidebar', '.rv-head', '.dd-math-tiles', '.dd-compare-row',
+    '.clc-tier-badge', '.clc-badge-pill', '.concept-badge', '.hco-head', '.pk-lbl', '.mon-page', '.mon-banner', '.legal-page',
   ].join(', ');
   // 互動元件與練習圖像區：只標說明文字
   const EN_ZONES = [
@@ -375,7 +375,7 @@
     '.mcq-feedback, .lq-item, .qprompt-box, .qfb-head, .daily-tip, .tip-hero, .term-hero, .w-card, .rs-sec, .help-box, ' +
     '.continue-card, .plan-day, .cs-sec, .tool-card, .spot-history';
   const EN_BLOCK_SEL = 'p, li, td, dd, dt, blockquote, div';
-  const EN_SKIP_PAGES = ['page-stats'];
+  const EN_SKIP_PAGES = ['page-stats', 'page-play', 'page-resources', 'page-legal', 'page-feedback'];
   const EN_PAREN_RE = /^\s?[（(]\s*[A-Za-z0-9]/;
   const reEsc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const enWordRe = (w, caseSensitive) => new RegExp('(^|[^A-Za-z0-9-])' + reEsc(w) + '(?![A-Za-z0-9-])', caseSensitive ? '' : 'i');
@@ -578,10 +578,11 @@
     const main = document.getElementById('appMain');
     if (!main || typeof MutationObserver === 'undefined') return;
     const mo = new MutationObserver((recs) => {
+      if (EN_SKIP_PAGES.some((c) => main.classList.contains(c))) return;
       const seen = new Set();
       recs.forEach((r) => r.addedNodes.forEach((n) => {
         const el = n.nodeType === 1 ? n : n.parentElement;
-        if (el && el.isConnected && !(el.closest && el.closest('.rgrid'))) seen.add(el);
+        if (el && el.isConnected && !(el.closest && el.closest('.rgrid, .arena-table, .no-en'))) seen.add(el);
       }));
       if (!seen.size) return;
       const roots = Array.from(seen);
@@ -598,8 +599,9 @@
   // ===========================================================================
   let searchIdx = null;
   const QUIZ_PAGES = [
-    ['showdown', '🏆', '誰贏了？比牌練習'], ['handname', '🃏', '牌型辨識練習'], ['outs', '🎲', '數 Outs 練習'],
-    ['position', '🧭', '位置與行動順序練習'], ['preflop', '♠️', '翻前決策練習'], ['paint', '🎨', '範圍默寫練習'],
+    ['showdown', '🏆', '誰贏了？比牌練習'], ['handname', '🃏', '牌型辨識練習'], ['nuts', '💎', '找堅果練習'],
+    ['outs', '🎲', '數 Outs 練習'], ['position', '🧭', '位置與行動順序練習'], ['texture', '🧩', '牌面判讀練習'],
+    ['spots', '🎯', '翻後情境決策練習'], ['preflop', '♠️', '翻前決策練習'], ['paint', '🎨', '範圍默寫練習'],
     ['theory', '📚', 'GTO 理論測驗'], ['math', '🧮', '撲克數學練習'], ['terms', '🔤', '術語快問快答'],
     ['equity', '📊', '勝率直覺練習'], ['mix', '⚡', '綜合隨機練習'],
   ];
@@ -611,7 +613,9 @@
       ['🎓', '學習地圖（全部課程）', '#/learn'], ['📊', '翻前範圍表', '#/ranges'],
       ['🎯', '練習中心', '#/quiz'], ['🧮', '計算工具', '#/tools'], ['📖', '撲克百科', '#/wiki'],
       ['🔤', '術語辭典', '#/wiki/glossary'], ['💡', '技巧錦囊', '#/wiki/tips'], ['🩹', '常見漏洞', '#/wiki/leaks'],
-      ['❓', '新手常見問題 FAQ', '#/wiki/faq'], ['📋', '速查表', '#/wiki/cheatsheet'], ['📚', '推薦資源與書單', '#/wiki/resources'], ['📈', '我的進度', '#/stats'],
+      ['❓', '新手常見問題 FAQ', '#/wiki/faq'], ['📋', '速查表', '#/wiki/cheatsheet'], ['📚', '推薦資源與書單', '#/wiki/resources'],
+      ['📈', '我的進度', '#/stats'], ['⚡', '進階資源與手冊', '#/resources'], ['💬', '意見回饋', '#/feedback'],
+      ['⚖️', '法務與合規聲明', '#/legal/terms'],
     ].forEach(([icon, title, href]) => push({ type: '頁面', icon, title, href, w: 3 }));
     QUIZ_PAGES.forEach(([id, icon, title]) => push({ type: '練習', icon, title, href: '#/quiz/' + id, w: 2 }));
     (GTO.THEORY || []).forEach((l) => {

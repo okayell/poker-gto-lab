@@ -99,7 +99,7 @@
   // ── 3. Subtle Non-Intrusive Funnel Banner for Home / Replay pages ──
   function bannerHtml(placement) {
     return (
-      '<section class="mon-banner" data-placement="' + esc(placement || 'home') + '">' +
+      '<section class="mon-banner no-en" data-placement="' + esc(placement || 'home') + '">' +
         '<div class="mon-banner-left">' +
           '<span class="mon-kicker">♠ 永久免費練習 · 進階資源站</span>' +
           '<h3>想把短影音重點存進手機，或升級進階 GTO Solver？</h3>' +
@@ -125,14 +125,14 @@
       : '';
 
     root.innerHTML =
-      '<div class="mon-page">' +
+      '<div class="mon-page no-en">' +
         '<div class="mon-hero">' +
           '<div class="mon-hero-top">' +
             '<span class="mon-kicker">GTO 撲克學院 · 獨立進階資源與支持</span>' +
             utmBadge +
           '</div>' +
           '<h1>把免費練習工具用到極致，再用對的工具加速升級</h1>' +
-          '<p class="mon-lead">本站所有核心功能（<b>6 人 AI 實戰桌、雙軌教練覆盤、54 堂圖解課、40 組 6-Max 範圍表、11 種隨機訓練</b>）一律免費、免註冊直接用。下方為站長精選的延伸教材與合法競技訓練軟體推薦。</p>' +
+          '<p class="mon-lead">本站所有核心功能（<b>6 人 AI 實戰桌、雙軌教練覆盤、54 堂圖解課、40 組 6-Max 範圍表、14 種無限隨機練習</b>）一律免費、免註冊直接用。下方為站長精選的延伸教材與合法競技訓練軟體推薦。</p>' +
         '</div>' +
 
         '<section class="mon-section">' +
