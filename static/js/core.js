@@ -386,6 +386,14 @@
       if (p.mistakes.length > 300) p.mistakes.length = 300;
     }
     saveProgress();
+    if (GTO.Monetize && GTO.Monetize.trackEvent) {
+      GTO.Monetize.trackEvent('quiz_answer', {
+        quiz_mode: String(mode || 'unknown'),
+        is_correct: correct ? 'yes' : 'no',
+        streak: p.streak.cur,
+        total_answered: p.totals.a,
+      });
+    }
   }
 
   function studyDays() {

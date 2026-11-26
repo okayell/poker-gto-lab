@@ -253,6 +253,8 @@
     vs4bet: { icon: '💥', label: '被 4-Bet', desc: '你 3-Bet 後被 4-Bet，要全下、跟注還是棄牌？', heroLbl: '② 你在哪 3-Bet？', villLbl: '③ 誰 4-Bet 你？' },
   };
   const rangeState = { scId: 'rfi_utg', simple: true, compare: false, compareId: 'rfi_btn', hand: 'AKs' };
+  let lastTrackedRangeScId = '';
+  let lastTrackedHandKey = '';
 
   function renderRangesPage(root, subScId) {
     if (subScId && GTO.SCENARIOS[subScId]) rangeState.scId = subScId;
@@ -300,12 +302,29 @@
       wrap.addEventListener('click', (e) => {
         const simpleBtn = e.target.closest('[data-simple]');
         if (simpleBtn) {
-          rangeState.simple = simpleBtn.getAttribute('data-simple') === '1';
+          const nextSimple = simpleBtn.getAttribute('data-simple') === '1';
+          if (nextSimple !== rangeState.simple) {
+            rangeState.simple = nextSimple;
+            if (GTO.Monetize && GTO.Monetize.trackEvent) {
+              GTO.Monetize.trackEvent('range_mode_toggle', {
+                action_type: 'view_mode',
+                value: rangeState.simple ? 'simple' : 'gto_mix',
+                scenario_id: rangeState.scId,
+              });
+            }
+          }
           renderRangesPage(root);
           return;
         }
         if (e.target.closest('#cmpBtn')) {
           rangeState.compare = !rangeState.compare;
+          if (GTO.Monetize && GTO.Monetize.trackEvent) {
+            GTO.Monetize.trackEvent('range_mode_toggle', {
+              action_type: 'compare',
+              value: rangeState.compare ? 'on' : 'off',
+              scenario_id: rangeState.scId,
+            });
+          }
           renderRangesPage(root);
           return;
         }
@@ -381,6 +400,14 @@
       rangeState.hand = h;
       const cur = GTO.getScenario(rangeState.scId);
       renderHandInspector(wrap.querySelector('#handInspector'), cur, h);
+      const handKey = cur.id + ':' + h;
+      if (handKey !== lastTrackedHandKey && GTO.Monetize && GTO.Monetize.trackEvent) {
+        lastTrackedHandKey = handKey;
+        GTO.Monetize.trackEvent('range_hand_inspect', {
+          scenario_id: cur.id,
+          hand: h,
+        });
+      }
     };
     GTO.renderGrid(wrap.querySelector('#mainGrid'), sc, { simple: rangeState.simple, selectedHand: rangeState.hand, onSelect: onSel });
 
@@ -391,6 +418,17 @@
       GTO.renderGrid(wrap.querySelector('#cmpGrid'), GTO.getScenario(rangeState.compareId), { simple: rangeState.simple, selectedHand: rangeState.hand, onSelect: onSel });
     }
     renderHandInspector(wrap.querySelector('#handInspector'), sc, rangeState.hand);
+
+    if (sc.id !== lastTrackedRangeScId && GTO.Monetize && GTO.Monetize.trackEvent) {
+      lastTrackedRangeScId = sc.id;
+      GTO.Monetize.trackEvent('range_scenario_view', {
+        scenario_id: sc.id,
+        scenario_cat: sc.cat,
+        hero_pos: sc.hero,
+        villain_pos: sc.villain || 'none',
+        view_mode: rangeState.simple ? 'simple' : 'gto_mix',
+      });
+    }
   }
 
   function renderHandInspector(box, sc, hand) {
@@ -938,6 +976,7 @@
     if (GTO.teardownQuiz) GTO.teardownQuiz();
     if (GTO.ArenaUI && GTO.ArenaUI.teardownPlay) GTO.ArenaUI.teardownPlay();
     if (GTO.ReplayUI && GTO.ReplayUI.teardownReplay) GTO.ReplayUI.teardownReplay();
+    if (page !== 'ranges') lastTrackedRangeScId = '';
     const isPageSwitch = prevPage && prevPage !== page;
     renderHeader(page);
     main.className = 'app-main page-' + page;
@@ -963,7 +1002,7 @@
       else if (page === 'feedback') GTO.renderFeedbackPage(main);
       else renderHomePage(main);
       if (GTO.hydrateWidgets) GTO.hydrateWidgets(main);
-      if (GTO.Monetize) GTO.Monetize.trackPageView(page, sub);
+      if (GTO.Monetize) GTO.Monetize.trackPageView(page, sub, extra, query);
     } catch (e) {
       console.error(e);
       main.innerHTML = '<div class="empty">頁面載入失敗：' + esc(e.message) + '　<a href="#/home">回首頁</a></div>';

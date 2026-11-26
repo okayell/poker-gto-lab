@@ -15,6 +15,10 @@
     // ── 1. Google Analytics 4 追蹤碼（留空或保留 G-XXXXXXXXXX 時不載入）──
     ga4MeasurementId: 'G-B8GN60K9V5',
 
+    // ── 1b. Microsoft Clarity 熱圖與操作錄影（免費、無流量上限；留空時不載入）──
+    //      至 https://clarity.ms/ 建立專案後，把 Project ID（例如 'p1a2b3c4d5'）貼到下方即可自動啟用
+    clarityProjectId: '',
+
     // ── 2. 你的 IG / YouTube 頻道連結 ──
     social: {
       igHandle: '@pokergtolab',

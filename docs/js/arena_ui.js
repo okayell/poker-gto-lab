@@ -16,6 +16,7 @@
   let retryMode = false;
   let currentRetryInfo = null;
   let lastSavedHandId = '';
+  let sessionHandsTracked = 0;
 
   // 渲染快取（避免每步重建整張牌桌 DOM 與反覆解析 localStorage）
   let cachedNotes = null;
@@ -154,6 +155,24 @@
     // 累積戰績至 GTO.progress.arenaStats
     if (GTO.CoachEngine && GTO.CoachEngine.recordArenaHandSummary) {
       GTO.CoachEngine.recordArenaHandSummary(record);
+    }
+
+    // 上報 GA4 / Clarity：完成一手 AI 實戰牌局
+    if (GTO.Monetize && GTO.Monetize.trackEvent) {
+      sessionHandsTracked++;
+      const heroProfit = record.netProfit ? Number(record.netProfit[0] || 0) : 0;
+      const boardLen = Array.isArray(record.board) ? record.board.length : 0;
+      const maxStreet = boardLen >= 5 ? 'river' : boardLen === 4 ? 'turn' : boardLen >= 3 ? 'flop' : 'preflop';
+      GTO.Monetize.trackEvent('arena_hand_completed', {
+        preset: (settings && settings.preset) || 'mixed',
+        stack_mode: (settings && settings.stackMode) || 'realistic',
+        hero_position: (record.positions && record.positions[0]) || '',
+        max_street: maxStreet,
+        result_bb: Math.round(heroProfit * 10) / 10,
+        decisions_count: Array.isArray(record.heroDecisions) ? record.heroDecisions.length : 0,
+        has_mistake: hasMistake ? 'yes' : 'no',
+        hands_in_session: sessionHandsTracked,
+      });
     }
   }
 

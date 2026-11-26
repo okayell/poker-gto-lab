@@ -102,9 +102,19 @@
   function markDone(id, done) {
     const p = GTO.progress;
     p.lessonsRead = p.lessonsRead || {};
+    const wasDone = !!p.lessonsRead[id];
     if (done === false) delete p.lessonsRead[id];
     else p.lessonsRead[id] = Date.now();
     GTO.saveProgress();
+    if (done !== false && !wasDone && GTO.Monetize && GTO.Monetize.trackEvent) {
+      const l = getLesson(id);
+      GTO.Monetize.trackEvent('lesson_complete', {
+        lesson_id: id,
+        lesson_title: l ? l.title : id,
+        lesson_stage: l ? (l.stage || '') : '',
+        completed_total: Object.keys(p.lessonsRead).length,
+      });
+    }
   }
   function stageProgress(stageId) {
     const ls = lessonsOfStage(stageId);

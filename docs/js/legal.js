@@ -141,6 +141,10 @@
   }
 
   function renderPrivacyTab() {
+    const hasClarity = !!(GTO.MONETIZE_CONFIG && (GTO.MONETIZE_CONFIG.clarityProjectId || '').trim());
+    const clarityBullet = hasClarity
+      ? '<li><strong>介面互動熱圖（Microsoft Clarity）：</strong>本站亦使用 Microsoft Clarity 記錄匿名之頁面捲動與點擊熱圖，用以優化手機與桌機操作體驗（系統自動遮罩輸入欄位，不蒐集敏感個資）。</li>'
+      : '';
     return (
       '<div class="legal-grid">' +
         '<article class="legal-card">' +
@@ -153,10 +157,11 @@
         '<article class="legal-card">' +
           '<span class="legal-kicker">02 · 匿名流量統計</span>' +
           '<h2>流量分析與 Cookie／Session 技術</h2>' +
-          '<p>為了解課程受歡迎程度與改善網站動線，本站使用 <strong>Google Analytics 4（GA4）</strong> 收集去識別化之統計資訊，包含：</p>' +
+          '<p>為了解課程受歡迎程度與改善網站動線，本站使用 <strong>Google Analytics 4（GA4）</strong>' + (hasClarity ? ' 與 <strong>Microsoft Clarity</strong>' : '') + ' 收集去識別化之統計資訊，包含：</p>' +
           '<ul>' +
-            '<li>瀏覽頁面路徑、停留概況、瀏覽器類型與裝置解析度等聚合數據（不直接識別個人身分）。</li>' +
-            '<li>當您經由社群推廣連結進入本站時，系統會於該次瀏覽工作階段之 <code>sessionStorage</code> 暫存 UTM 來源標籤（如 <code>utm_source</code>、<code>utm_campaign</code>），並在您點擊外部資源按鈕時記錄匿名之點擊事件。</li>' +
+            '<li>瀏覽頁面路徑、停留概況、核心功能互動（如範圍表瀏覽、題庫作答與 AI 練習手數）、瀏覽器類型與裝置解析度等聚合數據（不直接識別個人身分）。</li>' +
+            '<li>當您經由社群推廣連結進入本站時，系統會於該次瀏覽工作階段之 <code>sessionStorage</code> 暫存 UTM 來源標籤（如 <code>utm_source</code>、<code>utm_medium</code>、<code>utm_campaign</code>、<code>utm_content</code>），並在您點擊外部資源按鈕時記錄匿名之點擊事件。</li>' +
+            clarityBullet +
             '<li><strong>退出追蹤方式：</strong>您可透過瀏覽器設定封鎖或刪除 Cookie，或安裝 Google 官方提供之 <em>Google Analytics Opt-out Browser Add-on</em> 停用 GA4 數據收集。</li>' +
           '</ul>' +
         '</article>' +
